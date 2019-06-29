@@ -1,0 +1,3 @@
+title = <paint_hylan>
+author = <Hylan>
+orientaion = <portrait>
