@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="about">
+  <text>产品名称：天气预报</text>
+  <text>版本号：{{v}}</text>
+  <text>数据来源：和风天气</text>
+  <text>开发时间：2019年5月</text>
+  </view>
+  <view class="about aboutme">
+    <text class="title">Hylan</text>
+    <text>网站：www.github.com</text>
+    <text class="title">邮箱：jyzyg129@163.com</text>
+    <text>博客：www.cnblogs.com/</text>
+    <text class="title">GitHub：github.com/hylan129</text>
+  </view>
+</view>
