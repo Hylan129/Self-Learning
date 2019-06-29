@@ -1,0 +1,656 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<title>小π机器人调试工具</title>
+<script type="text/javascript">
+function foreward_3(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/cmd/move_to?distance=3&speed=0.3", true);
+    httpRequest.send();
+    alert("机器人正在前进3米中，请密切关注运行状况！");
+}
+function backward_3(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/cmd/move_to?distance=3&speed=-0.3", true);
+    httpRequest.send();
+    alert("机器人正在后台3米中，请密切关注运行状况！");
+}
+
+function foreward_5(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/cmd/move_to?distance=5&speed=0.3", true);
+    httpRequest.send();
+    alert("机器人正在前进5米中，请密切关注运行状况！");
+}
+
+function location_robot(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/real_time_data/position", true);
+    httpRequest.send();
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    document.getElementById("location_xyz").innerHTML = "故障";
+                    alert("机器人故障："+obj.errorCode);}
+                else {
+                    document.getElementById("location_xyz").innerHTML = obj.gridPosition.x+"#"+obj.gridPosition.y+"#"+parseFloat(obj.angle).toFixed(2);
+                    alert("坐标XYZ："+obj.gridPosition.x+"#"+obj.gridPosition.y+"#"+parseFloat(obj.angle).toFixed(2));
+                    }
+                }
+            }
+}
+function position_add_current(){
+
+    //  定义坐标点
+    var angle_current=0
+    var gridX_current=0
+    var gridY_current=0
+    var name_current=''
+    
+    var location_position = document.getElementById("location_xyz").childNodes[0].nodeValue 
+ 
+    location_position = location_position.split('#')
+    
+    angle_current = parseFloat(location_position[2]);
+    gridX_current = parseFloat(location_position[0]);
+    gridY_current = parseFloat(location_position[1]);
+    
+    //获取输入点名称     
+     var name=prompt("请输入点的名称（英文/数字）","")
+     while(true){
+        
+        if (name!=null && name!=""){
+            name_current = name
+            break}
+        else 
+            {var name=prompt("输入为空，请重新输入","")}
+    }
+    
+    request_rotate ={
+                      "angle":angle_current,
+                      "gridX":gridX_current,
+                      "gridY":gridY_current,
+                      "mapName":"office",
+                      "name":name_current,
+                      "type":2
+                     }
+    //console.log(request_rotate)
+    var httpRequest1 = new XMLHttpRequest();
+    httpRequest1.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/position/add_position", true);
+    httpRequest1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    httpRequest1.send(JSON.stringify(request_rotate))
+    
+    httpRequest1.onreadystatechange = function () {
+            if (httpRequest1.readyState == 4 && httpRequest1.status == 200) {
+                var json = httpRequest1.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    alert("添加点失败！故障原因："+obj.errorCode);}
+                else {
+                    alert("添加点成功！");
+                    }
+                }
+        }
+}
+
+function position_add_set(){
+
+    //  定义坐标点
+    var angle_current=0
+    var gridX_current=0
+    var gridY_current=0
+    var name_current=''
+    
+    //获取输入点名称     
+     var name=prompt("请输入点的名称（英文/数字）","")
+     while(true){
+        
+        if (name!=null && name!=""){
+            name_current = name
+            break}
+        else 
+            {var name=prompt("输入为空，请重新输入","")}
+    }
+    var location_position=prompt("请输入XYZ点的坐标\n格式：坐标X#坐标Y#角度","")
+ 
+    location_position = location_position.split('#')
+    
+    angle_current = parseFloat(location_position[2]);
+    gridX_current = parseFloat(location_position[0]);
+    gridY_current = parseFloat(location_position[1]);
+    
+    request_rotate ={
+                      "angle":angle_current,
+                      "gridX":gridX_current,
+                      "gridY":gridY_current,
+                      "mapName":"office",
+                      "name":name_current,
+                      "type":2
+                     }
+    console.log(request_rotate)
+    var httpRequest1 = new XMLHttpRequest();
+    httpRequest1.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/position/add_position", true);
+    httpRequest1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    httpRequest1.send(JSON.stringify(request_rotate))
+    
+    httpRequest1.onreadystatechange = function () {
+            if (httpRequest1.readyState == 4 && httpRequest1.status == 200) {
+                var json = httpRequest1.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    alert("添加点失败！故障原因："+obj.errorCode);}
+                else {
+                    alert("添加点成功！");
+                    }
+                }
+        }
+}
+
+function welcome_positon_add(){
+
+    //  定义坐标点
+    var angle_current=0
+    var gridX_current=0
+    var gridY_current=0
+    var name_current=''
+    
+    var welcome_set_status = document.getElementById("welcome_positon_set").childNodes[0].nodeValue 
+    var location_position = document.getElementById("location_xyz").childNodes[0].nodeValue 
+ 
+    location_position = location_position.split('#')
+    
+    angle_current = parseFloat(location_position[2]);
+    gridX_current = parseFloat(location_position[0]);
+    gridY_current = parseFloat(location_position[1]);
+    
+    request_rotate ={
+                      "angle":angle_current,
+                      "gridX":gridX_current,
+                      "gridY":gridY_current,
+                      "mapName":"office",
+                      "name":"yb",
+                      "type":2
+                     }
+    if (welcome_set_status=="未配"){
+    
+        //配置迎宾点
+        var httpRequest1 = new XMLHttpRequest();
+        httpRequest1.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/position/add_position", true);
+        httpRequest1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        httpRequest1.send(JSON.stringify(request_rotate))
+
+        httpRequest1.onreadystatechange = function () {
+            if (httpRequest1.readyState == 4 && httpRequest1.status == 200) {
+                var json = httpRequest1.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    alert("添加点迎宾点失败！故障原因："+obj.errorCode);}
+                else {
+                    alert("添加迎宾点成功！");
+                    }
+                }
+            }
+        try{
+            //将坐标点添加到数据库
+            var yb = gridX_current+"#"+gridY_current + "#"+angle_current
+            var objdbConn = new ActiveXObject("ADODB.Connection");
+            var strdsn = "Driver={SQL Server};SERVER=10.7.5.105;UID=sa;PWD=qxznqipai!;DATABASE=DatabaseSQLRobot";
+            objdbConn.Open(strdsn);
+            alert("数据库连接成功<br>");  
+            //sql语句
+            objdbConn.Execute("SET NOCOUNT ON ; UPDATE  yxp SET minor_instruction ='"+yb+"' WHERE  (main_instruction = 'welcome');SET NOCOUNT OFF" );
+            objdbConn.Close(); 
+            alert("迎宾点已成功加入数据库！");
+            }
+        catch(err) {
+            alert("迎宾点配置失败："+err.message);
+            }
+        }
+    else if (welcome_set_status=="已配"){
+        //删除点数据
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/cmd/delete_position?map_name=office&position_name=yb", true);
+        httpRequest.send();
+        httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                    var json = httpRequest.responseText;
+                    var obj = JSON.parse(json);
+                    if (obj.successed==false){
+                        alert("删除失败！故障原因："+obj.errorCode);}
+                }
+        }
+        
+        //配置迎宾点
+        var httpRequest1 = new XMLHttpRequest();
+        httpRequest1.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/position/add_position", true);
+        httpRequest1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        httpRequest1.send(JSON.stringify(request_rotate))
+
+        httpRequest1.onreadystatechange = function () {
+            if (httpRequest1.readyState == 4 && httpRequest1.status == 200) {
+                var json = httpRequest1.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    alert("添加点迎宾点失败！故障原因："+obj.errorCode);}
+                else {
+                    alert("添加迎宾点成功！");
+                    }
+                }
+            }
+        try {
+            //将坐标点添加到数据库
+            var yb = gridX_current+"#"+gridY_current + "#"+angle_current
+            var objdbConn = new ActiveXObject("ADODB.Connection");
+            var strdsn = "Driver={SQL Server};SERVER=10.7.5.105;UID=sa;PWD=qxznqipai!;DATABASE=DatabaseSQLRobot";
+            objdbConn.Open(strdsn);
+            alert("数据库连接成功<br>");  
+            //sql语句
+            objdbConn.Execute("SET NOCOUNT ON ; UPDATE  yxp SET minor_instruction ='"+yb+"' WHERE  (main_instruction = 'welcome');SET NOCOUNT OFF" );
+            
+            objdbConn.Close(); 
+            alert("迎宾点已成功加入数据库！");
+        }
+        catch(err) {
+            alert("迎宾点配置失败："+err.message);
+            }
+        }
+    else {
+        alert("请刷新获取初始数据后再配置！");
+    }
+}
+
+function charger_positon_add(){
+
+    //  定义坐标点
+    var angle_current=0
+    var gridX_current=0
+    var gridY_current=0
+    var name_current=''
+    
+    var location_position = document.getElementById("location_xyz").childNodes[0].nodeValue
+    var charger_set_status = document.getElementById("charger_positon_set").childNodes[0].nodeValue 
+ 
+    location_position = location_position.split('#')
+    
+    angle_current = parseFloat(location_position[2]);
+    gridX_current = parseFloat(location_position[0]);
+    gridY_current = parseFloat(location_position[1]);
+    
+    request_rotate ={
+                      "angle":angle_current,
+                      "gridX":gridX_current,
+                      "gridY":gridY_current,
+                      "mapName":"office",
+                      "name":"cd",
+                      "type":1
+                     }
+    if(charger_set_status=="未配"){
+     
+        var httpRequest1 = new XMLHttpRequest();
+        httpRequest1.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/position/add_position", true);
+        httpRequest1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        httpRequest1.send(JSON.stringify(request_rotate))
+
+        httpRequest1.onreadystatechange = function () {
+            if (httpRequest1.readyState == 4 && httpRequest1.status == 200) {
+                var json = httpRequest1.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    alert("添加点充电点失败！故障原因："+obj.errorCode);}
+                else {
+                    alert("添加充电点成功！");
+                    }
+                }
+            }
+        }
+    else if(charger_set_status=="已配"){
+    
+        //删除点数据
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/cmd/delete_position?map_name=office&position_name=cd", true);
+        httpRequest.send();
+        httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                    var json = httpRequest.responseText;
+                    var obj = JSON.parse(json);
+                    if (obj.successed==false){
+                        alert("删除失败！故障原因："+obj.errorCode);}
+                }
+        }
+        
+        var httpRequest1 = new XMLHttpRequest();
+        httpRequest1.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/position/add_position", true);
+        httpRequest1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        httpRequest1.send(JSON.stringify(request_rotate))
+
+        httpRequest1.onreadystatechange = function () {
+            if (httpRequest1.readyState == 4 && httpRequest1.status == 200) {
+                var json = httpRequest1.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    alert("添加点充电点失败！故障原因："+obj.errorCode);}
+                else {
+                    alert("添加充电点成功！");
+                    }
+                }
+            }
+    }
+    else {
+        alert("请刷新获取初始数据后再配置！！");
+    }
+}
+function device_status(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/data/device_status", true);
+    httpRequest.send();
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                //console.log(obj.data.emergency)
+                myWindow=window.open('','','width=1000,height=500');
+                var reg=new RegExp(",","g"); //创建正则RegExp对象   
+                 
+                myWindow.document.body.innerHTML= json.replace(reg,"<br>");
+                myWindow.focus();
+                }
+            };
+}
+function rotate_30(){
+
+    request_rotate ={"rotateAngle":30,"rotateSpeed":0.3}
+
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/rotate", true);
+    httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    httpRequest.send(JSON.stringify(request_rotate))
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                console.log(obj)
+                alert("机器人正在旋转30°，请注意！")
+            };
+        }
+}
+function rotate_180(){
+
+    request_rotate ={"rotateAngle":180,"rotateSpeed":0.3}
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/rotate", true);
+    httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    httpRequest.send(JSON.stringify(request_rotate));
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                console.log(obj)
+                alert("机器人正在旋转100°，请注意！")
+            };
+        }
+}
+
+function xunhang_setting(){
+
+    //获取巡航路径     
+    var road=prompt("请依次输入巡航路径点的名称，以#间隔开！","")
+     
+    var reg=new RegExp("#","g");
+    try {
+        //将巡航路径添加到数据库
+        var objdbConn = new ActiveXObject("ADODB.Connection");
+        var strdsn = "Driver={SQL Server};SERVER=10.7.5.105;UID=sa;PWD=qxznqipai!;DATABASE=DatabaseSQLRobot";
+        objdbConn.Open(strdsn);
+        alert("数据库连接成功！")
+        //sql语句：update SetParm SET minor_instruction='1 2 3',EnableVoice='True',VoiceKeys='开始巡航'  where set_nm='所有点巡航' and main_instruction='Cruise'
+        objdbConn.Execute("UPDATE  SetParm SET minor_instruction ='" + road.replace(reg,' ') + "' ,EnableVoice='True',VoiceKeys='开战'  where (set_nm='所有点巡航' and main_instruction='Cruise')" );
+        objdbConn.Close(); 
+        alert("巡航路径："+road.replace(reg,' ') +",已加入数据库，语音指令：开战！");
+        }
+    catch(err) {
+        alert("数据库操作失败："+err.message);
+    }
+}
+
+function sql_edit(){
+
+    //获取巡航路径     
+     var road=prompt("请依次输入SQL指令！","")
+    
+    //将巡航路径添加到数据库
+    try {
+        var objdbConn = new ActiveXObject("ADODB.Connection");
+        var strdsn = "Driver={SQL Server};SERVER=10.7.5.105;UID=sa;PWD=qxznqipai!;DATABASE=DatabaseSQLRobot";
+        objdbConn.Open(strdsn);
+        alert("数据库连接成功！")
+        //sql语句：update SetParm SET minor_instruction='1 2 3',EnableVoice='True',VoiceKeys='开始巡航'  where set_nm='所有点巡航' and main_instruction='Cruise'
+        objdbConn.Execute(road);
+        objdbConn.Close(); 
+        alert("数据库操作成功!");
+        }
+    catch(err) {
+        alert("数据库操作失败："+err.message);
+    }
+    
+}
+function arrivetoposition(){
+    
+    var location_position=prompt("请输入指定点坐标\n格式：坐标X#坐标Y#角度","")
+ 
+    location_position = location_position.split('#')
+    
+    angle_current = parseFloat(location_position[2]);
+    gridX_current = parseFloat(location_position[0]);
+    gridY_current = parseFloat(location_position[1]);
+
+    request_rotate ={"destination":{"angle":angle_current,"gridPosition":{"x":gridX_current,"y":gridY_current}}}
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('POST', "http://10.7.5.88:8080/gs-robot/cmd/navigate", true);
+    httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    httpRequest.send(JSON.stringify(request_rotate))
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==true){
+                    alert("机器人正在前往指定坐标点，请注意！")
+                    }
+                else{
+                    alert("导航失败！")
+                }
+            }
+        }
+}
+function update_date(){
+
+    try {
+    //更新地图点数据
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/data/positions?map_name=office", true);
+    httpRequest.send();
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                document.getElementById("position_count").innerHTML = obj.data.length}
+            }
+    //更新急停/充电状态数据        
+    var httpRequest1 = new XMLHttpRequest();
+    httpRequest1.open('GET', "http://10.7.5.88:8080/gs-robot/data/device_status", true);
+    httpRequest1.send();
+    httpRequest1.onreadystatechange = function () {
+            if (httpRequest1.readyState == 4 && httpRequest1.status == 200) {
+                var json1 = httpRequest1.responseText;
+                var obj1 = JSON.parse(json1);
+                //console.log(obj.data.emergency)
+                
+                if (obj1.data.emergency==true){
+                    document.getElementById("emergency_status").innerHTML = "按下"}
+                else if (obj1.data.emergency==false){
+                    document.getElementById("emergency_status").innerHTML = "未按下"}
+                if (obj1.data.charger){
+                    document.getElementById("charger_status").innerHTML = "正在充电"}
+                else if (obj1.data.charger==0){
+                    document.getElementById("charger_status").innerHTML = "未充电"}
+                }
+            }
+    var httpRequest2 = new XMLHttpRequest();
+    httpRequest2.open('GET', "http://10.7.5.88:8080/gs-robot/real_time_data/position", true);
+    httpRequest2.send();
+    httpRequest2.onreadystatechange = function () {
+            if (httpRequest2.readyState == 4 && httpRequest2.status == 200) {
+                var json2 = httpRequest2.responseText;
+                var obj2 = JSON.parse(json2);
+                document.getElementById("location_xyz").innerHTML = obj2.gridPosition.x+"#"+obj2.gridPosition.y+"#"+parseFloat(obj2.angle).toFixed(2);
+                }
+            } 
+    var httpRequest3 = new XMLHttpRequest();
+    httpRequest3.open('GET', "http://10.7.5.88:8080/gs-robot/data/positions?map_name=office", true);
+    httpRequest3.send();
+    httpRequest3.onreadystatechange = function () {
+            if (httpRequest3.readyState == 4 && httpRequest3.status == 200) {
+                var json = httpRequest3.responseText;
+                var obj = JSON.parse(json);
+                if(obj.successed==true){
+                    var position_list =[]
+                    for (var i=0;i<obj.data.length;i++){
+                        position_list.push(obj.data[i].name);}
+                        
+                    if (position_list.indexOf("yb")>0){
+                        document.getElementById("welcome_positon_set").innerHTML = "已配";}
+                    else {
+                        document.getElementById("welcome_positon_set").innerHTML = "未配";}
+                    
+                    if (position_list.indexOf("cd")>0){
+                        document.getElementById("charger_positon_set").innerHTML = "已配";}
+                    else {
+                        document.getElementById("charger_positon_set").innerHTML = "未配";}
+                    }
+                }
+            }
+        }
+        catch (err){
+            alert("数据刷新有异常："+err.message+"，请检查！");
+        }
+}
+
+function office_position_list(){
+    //更新地图点数据
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/data/positions?map_name=office", true);
+    httpRequest.send();
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                //console.log(obj.data.emergency)
+                var position_list =[]
+                for (var i=0;i<obj.data.length;i++){
+                    position_list.push("No."+(i+1)+"："+obj.data[i].name+"："+obj.data[i].gridX + "#"+obj.data[i].gridY+"#"+parseFloat(obj.data[i].angle).toFixed(2)+"<br>")
+                }
+                myWindow=window.open('','','width=1000,height=500');
+                myWindow.document.body.innerHTML= "导航点数量："+obj.data.length+ "个，清单如下：<br>"+position_list.join("");
+                myWindow.focus();
+            }
+    }
+}
+function office_map_list(){
+    //更新地图数据
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/data/maps", true);
+    httpRequest.send();
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                
+                var position_list =[]
+                for (var i=0;i<obj.data.length;i++){
+                    position_list.push("No."+(i+1)+"："+obj.data[i].name+"<br>")
+                }
+                myWindow=window.open('','','width=1000,height=500');
+                myWindow.document.body.innerHTML= "地图数量："+obj.data.length+ "个，地图名称清单如下：<br>"+position_list.join("");
+                myWindow.focus();
+            }
+    }
+}
+function delete_position(){
+
+    var name=prompt("请输入需要删除点的名称","")
+    while(true){
+        
+        if (name!=null && name!=""){
+            name_current = name
+            break}
+        else 
+            {var name=prompt("输入为空，请重新输入","")}
+    }
+    //删除点数据
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "http://10.7.5.88:8080/gs-robot/cmd/delete_position?map_name=office&position_name="+name, true);
+    httpRequest.send();
+    httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var json = httpRequest.responseText;
+                var obj = JSON.parse(json);
+                if (obj.successed==false){
+                    alert("删除失败！故障原因："+obj.errorCode);}
+                else {
+                    alert("删除"+name+"点成功！");
+                    }
+            }
+    }
+}
+
+</script>
+</head>
+<body>
+<div>
+<div><label><br>0、机器人初始信息表&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp[ <a href="http://10.7.5.88:8080/gs-robot/data/map_png?map_name=office">office地图下载&nbsp&nbsp</a>
+<a href="http://10.7.5.88:8080/gs-robot/cmd/stop_current_task">停止当前任务&nbsp&nbsp</a>
+<a href="http://10.7.5.88:8080/gs-robot/cmd/stop_move_to">停止定向移动&nbsp&nbsp</a>
+<a href="http://10.7.5.88:8080/gs-robot/cmd/stop_rotate">停止转动角度&nbsp&nbsp</a>
+<a href="http://10.7.5.88:8080/gs-robot/cmd/cancel_navigate">取消定点导航&nbsp&nbsp</a>
+<a href="http://10.7.5.88:8080/gs-robot/cmd/pause_navigate">暂停定点导航&nbsp&nbsp</a>
+<a href="http://10.7.5.88:8080/gs-robot/cmd/resume_navigate">恢复定点导航&nbsp&nbsp]</a>
+</label>
+<div style="left:100px;margin-top:-0.5cm">
+<input type="button" id="fsh" onclick="update_date()" value="刷新初始信息" style="height:35px;width:200px;position:relative;left:1100px;">
+</div>
+<div style="margin-top:0.2cm">
+<label>&nbsp&nbsp&nbsp ○ 当前坐标XYZ：<span id="location_xyz" style="font:arial;color:red">待刷新</span></label>
+<label>&nbsp&nbsp&nbsp ○ 急停开关当前状态：<span id="emergency_status" style="font:arial;color:red">待刷新</span></label>
+<label>&nbsp&nbsp&nbsp ○ 是否正在充电：<span id="charger_status" style="font:arial;color:red">待刷新</span></label>
+<label>&nbsp&nbsp&nbsp ○ 迎宾点是否已配置：<span id="welcome_positon_set" style="font:arial;color:red">待刷新</span></label>
+<label>&nbsp&nbsp&nbsp ○ 充电点是否已配置：<span id="charger_positon_set" style="font:arial;color:red">待刷新</span></label>
+<label>&nbsp&nbsp&nbsp ○ office地图点数量：<span id="position_count" style="font:arial;color:red">待刷新</span></label>
+
+</div>
+<div style="margin-top:0.4cm"><label><br>1、运动操控</label></div>
+<input type="button" id="f3" onclick="foreward_3()" value="前进3米" style="height:45px;width:200px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.5cm">
+<input type="button" id="fb" onclick="backward_3()" value="后退3米" style="height:45px;width:200px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="f5" onclick="foreward_5()" value="前进5米" style="height:45px;width:200px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fr30" onclick="rotate_30()" value="旋转30度" style="height:45px;width:200px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fr180" onclick="rotate_180()" value="旋转180度" style="height:45px;width:200px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fato" onclick="arrivetoposition()" value="控制机器人前往指定点" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.7cm;margin-top:0.2cm">
+<div><label>2、信息获取</label></div>
+<input type="button" id="ft" onclick="location_robot()" value="获取机器人实时坐标" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.7cm">
+<input type="button" id="fe" onclick="device_status()" value="机器人设备状态信息" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fpositionlist" onclick="office_position_list()" value="office地图点清单明细" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fmaplist" onclick="office_map_list()" value="所有地图清单明细" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.7cm;margin-top:0.2cm">
+<div><label>3、地图配置</label></div>
+<input type="button" id="fp" onclick="position_add_current()" value="给地图新建点（当前坐标）" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.7cm">
+<input type="button" id="fset" onclick="position_add_set()" value="给地图新建点（指定坐标）" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fdelete" onclick="delete_position()" value="删除点坐标" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fc" onclick="charger_positon_add()" value="设置充电点" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.7cm;margin-top:0.2cm">
+<div><label>4、数据库配置（仅IE浏览器可用，配置完成后需手动刷新机器人平台服务）</label></div>
+<input type="button" id="fw" onclick="welcome_positon_add()" value="设置迎宾点（包含配置数据库）" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.7cm">
+<input type="button" id="fxh" onclick="xunhang_setting()" value="机器人巡航路径设定（指令：开战）" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.2cm;margin-top:0.2cm">
+<input type="button" id="fxh" onclick="sql_edit()" value="数据修改操作入口" style="height:45px;width:240px;margin-right:10px;margin-bottom:0.7cm;margin-top:0.2cm">
+
+</div>
+<div id="result">
+</div></body>
+</html>

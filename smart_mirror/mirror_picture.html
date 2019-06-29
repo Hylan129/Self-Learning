@@ -1,0 +1,87 @@
+<html>
+<title>
+你认真看过自己的侧面吗？
+</title>
+<head>
+<style type="text/css">
+#picture1,#picture2,#picture3,#picture4{
+     max-width: 900px; 
+     max-height:720px;
+     width: 320px; 
+     height:240px;
+     vertical-align:middle;
+     }
+#div1,#div2,#div3,#div4{
+    float:left
+    }
+p{
+    align:center
+    }
+</style>
+
+</head>
+<body>
+<p>您全方位照片集：</p>
+<div style ="border-top:1px solid #000;color:#0000FF">
+<div id="div1">
+<div><img id ="picture1" src="picture/face.jpeg"  alt="正面照" /></div>
+<div style="text-align:center">正面照</div>
+<div style="text-align:center"><img id ="qr1" src="qr/faceqr.png"  alt="照片二维码链接" /></div>
+</div>
+<div id="div2">
+<div><img id ="picture2" src="picture/leftside.jpeg"  alt="左侧照" /></div>
+<div style="text-align:center">左侧照</div>
+<div style="text-align:center"><img id ="qr2" src="qr/leftsideqr.png"  alt="照片二维码链接" /></div>
+</div>
+<div id="div4">
+<div><img id ="picture3" src="picture/rightside.jpeg"  alt="右侧照" /></div>
+<div style="text-align:center">右侧照</div>
+<div style="text-align:center"><img id ="qr3" src="qr/rightsideqr.png"  alt="照片二维码链接" /></div>
+</div>
+<div id="div4">
+<div><img id ="picture4" src="picture/back.jpeg"  alt="背影照" /></div>
+<div style="text-align:center">背影照</div>
+<div style="text-align:center"><img id ="qr4" src="qr/backqr.png"  alt="照片二维码链接" /></div>
+</div>
+</div>
+</body>
+<script>
+
+    picture1.addEventListener("mouseover",function(){
+                    this.style.width =  640 + 'px';
+                    this.style.height =  480 + 'px';
+            
+    })
+    picture1.addEventListener("mouseout",function(){
+                    this.style.width =  320 + 'px';
+                    this.style.height =  240 + 'px';
+    })
+    picture2.addEventListener("mouseover",function(){
+                    this.style.width =  640 + 'px';
+                    this.style.height =  480 + 'px';
+    })
+    picture2.addEventListener("mouseout",function(){
+                    this.style.width =  320 + 'px';
+                    this.style.height =  240 + 'px';
+    })
+    picture3.addEventListener("mouseover",function(){
+                    this.style.width =  640 + 'px';
+                    this.style.height =  480 + 'px';
+    })
+    picture3.addEventListener("mouseout",function(){
+                    this.style.width =  320 + 'px';
+                    this.style.height =  240 + 'px';
+    })
+    picture4.addEventListener("mouseover",function(){
+                    this.style.width =  640 + 'px';
+                    this.style.height =  480 + 'px';
+    })
+    picture4.addEventListener("mouseout",function(){
+                    this.style.width =  320 + 'px';
+                    this.style.height =  240 + 'px';
+    })
+
+
+
+</script>
+</html>
