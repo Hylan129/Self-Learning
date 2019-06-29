@@ -1,0 +1,75 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="viewport" content="width=device-width">
+<title>文本转语音指令+控制播放</title>
+
+<script>
+function display(){
+//ss1中tok参数一个内有效，失效后需根据个人百度开发账号重新生成
+var ss1 ='<video id="myvideo" controls="" autoplay="" name="media" ><source src="http://tsn.baidu.com/text2audio?lan=zh&amp;cuid=50-5B-C2-C8-DA-27&amp;tok=24.5a8b92fcac388ad6f1792048bf24edb5.2592000.1558064057.282335-16039151&amp;ctp=1&amp;&amp;ie=UTF-8&amp;tex='
+var ss2 = document.getElementById('ttsText').value;
+var ss3 = '&amp;per='
+var ss4 = document.getElementById('person').value;
+var ss5 ='&amp;vol='
+var ss6 = document.getElementById('volume').value;
+var ss7 = '&amp;spd='
+var ss8 = document.getElementById('voicespd').value;
+var ss9 = '&amp;pit='
+var ss10 = document.getElementById('voicepit').value;
+var ss11 = '" type="audio/mp3"></video>'
+
+var videodiv = document.getElementById("Hylan")
+videodiv.innerHTML = ss1 + ss2 + ss3 + ss4 + ss5 + ss6 + ss7 + ss8 + ss9 + ss10 + ss11
+
+var innertimes = document.getElementById('count').value;
+var dtime = document.getElementById('delaytime').value * 1000 ;
+var curtime = new Date()
+document.getElementById("alltimes").innerHTML="总共设置播放次数：" + (innertimes);
+document.getElementById("firstdisplaytime").innerHTML="开始播放时间：" + curtime;
+var innerstart =0;
+var myvideo1 = document.getElementById("myvideo")
+//myvideo1.play();
+myvideo1.addEventListener("ended",function() {
+	setTimeout(function(){if((innertimes - innerstart)>1){document.getElementById("counttimes").innerHTML="当前是第"+(innerstart+2)+"次播放！";}if(innerstart == 0){document.getElementById("firstdisplaytime").innerHTML="开始播放时间：" + new Date();}myvideo1.play();innerstart++;innerstart == innertimes && myvideo1.pause(); if(innerstart == innertimes){document.getElementById("lastdisplaytime").innerHTML="结束播放时间：" + new Date();}},dtime);//启动音频，也就是播放
+    });
+}
+function myrefresh()
+{
+window.location.reload();
+}
+//setTimeout('myrefresh()',1000); //指定1秒刷新一次
+</script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        
+</head>
+<body>
+<div>
+<label for="ttsText" >1、语音指令</label>
+<textarea  id="ttsText" style="height:100px;width:1340px;" type="hidden" placeholder="请输入需要播放的指令...">哈喽，早！</textarea>
+<label for="count" >2、播报次数</label>
+<input  id="count" placeholder="请设置指令重复播放次数..." style="height:100px;width:1340px;">
+<label for="delaytime">3、延时时间</label>
+<input  id="delaytime" placeholder="请设置指令播报延时时间,请输入秒数..." style="height:100px;width:1340px;">
+<label for="voicespd">4、播报语速</label>
+<input  id="voicespd" placeholder="语速，取值0-15，默认为5中语速" style="height:100px;width:1340px;">
+<label for="volume">5、音量大小</label>
+<input  id="volume" placeholder="音量，取值0-15，默认为5中音量" style="height:100px;width:1340px;">
+<label for="person" >6、发声人</label>
+<input  id="person" placeholder="发音人选择, 0为普通女声，1为普通男生，3为情感合成-度逍遥，4为情感合成-度丫丫,默认为普通女声" style="height:100px;width:1340px;">
+<label for="voicepit" >7、音调高低</label>
+<input  id="voicepit" placeholder="音调，取值0-15，默认为5中语调" style="height:100px;width:1340px;">
+<input type="button" id="tts_btn1" onclick="display()" value="开始播报" style="height:120px;width:1350px;">
+<input type="button" id="tts_btn2" onclick="myrefresh()" value="刷新页面" style="height:120px;width:1350px;">
+</div>
+<div id="Hylan">
+<video id="myvideo" "></video>
+</div>
+<div>
+<p id ="counttimes"><font size="3" color="red">请设置参数，并点击开始进行第1次播放！</font></p>
+<p id ="alltimes">总共设置播放次数：</p>
+<p id ="firstdisplaytime">开始播放时间</p>
+<p id ="lastdisplaytime">结束播放时间：</p>
+</div>
+<span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</body></html>

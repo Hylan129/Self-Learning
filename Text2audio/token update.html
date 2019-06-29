@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Audio Test</title>
+<script src="static/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+function doTTS(){
+var ttsDiv = document.getElementById('bdtts_div_id');
+var ttsAudio = document.getElementById('tts_autio_id');
+var ttsText = document.getElementById('ttsText').value;
+var arry = ttsText.split("\n");//以换行符为分隔符将内容分割成数组
+var lens = arry.length;
+var url = 'http://tsn.baidu.com/text2audio?lan=zh&cuid=50-5B-C2-C8-DA-27&tok=24.0cc391a1954149b1e7c7d656dc86d612.2592000.1562570569.282335-16039151&ctp=1&&ie=UTF-8&tex=%E5%B0%8F%E6%B4%BE%E5%B0%8F%E6%B4%BE&per=2&vol=15&pit=5'
+
+//ttsDiv.removeChild(ttsAudio);
+// 获取百度语音token（一个月内有效）
+// https://openapi.baidu.com/oauth/2.0/token?grant_type=client_credentials&client_id=S6IIqWbtByr1K0GGRKGtkDRk&client_secret=qiptWbDjK2N7G0dGkfRtYV46itEM7MpU
+/*
+var token = '24.5a8b92fcac388ad6f1792048bf24edb5.2592000.1558064057.282335-16039151’;
+var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+var sss_0 = '<source id="tts_source_id" src="http://tsn.baidu.com/text2audio?lan=zh&cuid=50-5B-C2-C8-DA-27&tok=24.5a8b92fcac388ad6f1792048bf24edb5.2592000.1558064057.282335-16039151&ctp=1&spd=';
+var sss_1 = '&per=3&pit=15&text=';
+var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+var au2 = '</audio>';
+var times = document.getElementById('count').value;
+var dtime = document.getElementById('delaytime').value * 1000;
+var speed = document.getElementById('voicespd').value;
+var start = 0;//定义循环的变量
+
+for(var i=0;i<lens;i++){
+var sss = sss_0 + speed + sss_1 + arry[i] + '" type="audio/mpeg">';
+var innerstart = 0
+var innertimes = 3
+
+alert(arry[i])
+
+//ttsDiv.innerHTML = au1 + sss + eee + au2;
+alert(au1 + sss + eee + au2)
+//document.write(au1 + sss + eee + au2);
+//ttsAudio = document.getElementById('tts_autio_id');
+//var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=1&spd=4&text='+ttsText+'" type="audio/mpeg">';
+
+ttsAudio.addEventListener("ended",function() {
+	setTimeout(function(){ttsAudio.play();innerstart++;innerstart == innertimes && ttsAudio.pause();},dtime);//启动音频，也就是播放
+    });
+}
+}
+*/
+</script>
+<a href="#" class="navbar-brand hidden-sm nav-title" style="float:none">
+                        <img class="logo" style="text-align: center; display: inline-block; width: 100px;" src="https://www.qxsmartcity.com//static/images/logoA.jpg"></a>
+<link rel="icon" href="https://www.qxsmartcity.com//static/images/logoA.jpg" type="image/x-icon"/>
+</head>
+<body>
+
+<div>
+<label for="ttsText" >语音指令</label>
+<textarea  id="ttsText" style="height:100px;width:1340px;" type="hidden" placeholder="请输入指令...">小π小π</textarea>
+<label for="count" >播报次数</label>
+<input  id="count" placeholder="请输入数字..." style="height:100px;width:1340px;">
+<label for="delaytime">延时时间</label>
+<input  id="delaytime" placeholder="请输入秒数..." style="height:100px;width:1340px;">
+<label for="voicespd">播报语速</label>
+<input  id="voicespd" placeholder="请输入0~15数字" style="height:100px;width:1340px;">
+<input type="button" id="tts_btn" onclick="doTTS()" value="Click To Speak" style="height:120px;width:1350px;">
+</div>
+<div id="bdtts_div_id">
+<audio id="tts_autio_id">
+</audio>
+</div>
+</body>
+</html>

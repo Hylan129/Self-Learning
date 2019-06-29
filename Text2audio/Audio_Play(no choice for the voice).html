@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Audio Test From Hylan 2019-4-17 10:00</title>
+<script type="text/javascript">
+
+function doTTS(){
+var ttsDiv = document.getElementById('bdtts_div_id');
+var ttsAudio = document.getElementById('tts_autio_id');
+var ttsText = document.getElementById('ttsText').value;
+var speed = document.getElementById('voicespd').value;
+
+ttsDiv.removeChild(ttsAudio);
+var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+var sss_0 = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=';
+var sss_1 = '&text=';
+var sss = sss_0 + speed + sss_1 + ttsText + '" type="audio/mpeg">';
+
+//var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=4&text='+ttsText+'" type="audio/mpeg">';
+var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+var au2 = '</audio>';
+ttsDiv.innerHTML = au1 + sss + eee + au2;
+ttsAudio = document.getElementById('tts_autio_id');
+var start = 0;//定义循环的变量
+//var times=3;//定于循环的次数
+var times = document.getElementById('count').value;
+var dtime = document.getElementById('delaytime').value * 1000;
+
+function selfplay(){
+ttsAudio.play();
+}
+ttsAudio.addEventListener("ended",function() {
+	setTimeout(function(){ttsAudio.play();start++;start == times && ttsAudio.pause();},dtime);//启动音频，也就是播放
+    //循环
+    //也就是当循环的变量等于次数的时候，就会终止循环并且关掉音频
+    });
+}
+
+
+</script>
+
+<a href="#" class="navbar-brand hidden-sm nav-title" style="float:none">
+                        <img class="logo" style="text-align: center; display: inline-block; width: 100px;" src="https://www.qxsmartcity.com//static/images/logoA.jpg"></a>
+<link rel="icon" href="https://www.qxsmartcity.com//static/images/logoA.jpg" type="image/x-icon"/>
+
+</head>
+<body>
+
+<div>
+<label for="ttsText" >语音指令</label>
+<textarea  id="ttsText" style="height:100px;width:1340px;" type="hidden" placeholder="请输入指令...">小π小π</textarea>
+<label for="count" >播报次数</label>
+<input  id="count" placeholder="请输入数字..." style="height:100px;width:1340px;">
+<label for="delaytime">延时时间</label>
+<input  id="delaytime" placeholder="请输入秒数..." style="height:100px;width:1340px;">
+<label for="voicespd">播报语速</label>
+<input  id="voicespd" placeholder="请输入0~15数字"style="height:100px;width:1340px;">
+<input type="button" id="tts_btn" onclick="doTTS()" value="Click To Speak" style="height:120px;width:1350px;">
+</div>
+<div id="bdtts_div_id">
+
+<audio id="tts_autio_id">
+</audio>
+</div>
+</body>
+</html>
