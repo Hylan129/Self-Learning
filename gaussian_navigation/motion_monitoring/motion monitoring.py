@@ -70,6 +70,8 @@ urls =[url1,url5,url8]
 datas = []
 i = 0
 print("监控进行中......")
+print("间隔1s抓取一次数据......")
+
 while(True):
     for url in urls:
 
@@ -101,20 +103,4 @@ while(True):
     
     i = i +1
     datas =[]
-    time.sleep(0.5)
-
-"""
-#获取状态推送
-
-obj=socket.socket()
-obj.connect("10.7.5.88",8089)#连接目标地址和端口的套接字
-url0 = "http://10.7.5.88:8089/gs-robot/notice/navigation_status"
-req = request.Request(url0)
-res = request.urlopen(req)
-res = res.read().decode(encoding='utf-8')
-print(res)
-
-ret=str(obj.recv(),encoding="utf-8")
-print(ret)
-input("press enter to exit !")
-"""
+    time.sleep(1)
