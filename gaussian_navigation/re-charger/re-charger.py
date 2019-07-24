@@ -87,10 +87,10 @@ while(True):
         if(difference_x <= 2 and difference_y <=2 and difference_r < 10 and 
             difference_x_cd <= 2 and difference_y_cd <=2 and difference_r_cd < 10 and 
             difference_b < 0 and difference_bv < 0 and
-            data_row_2[3] == False and data_row_2[6] ==3 and data_row_1[6] ==3):
+            data_row_2[3] == False and data_row_2[6] !=0 and data_row_2[6] !=4):
             
             #向前走60cm
-            req_foreward = request.Request('http://10.7.5.88:8080/gs-robot/cmd/move_to?distance=0.6&speed=0.3')
+            req_foreward = request.Request('http://10.7.5.88:8080/gs-robot/cmd/move_to?distance=0.3&speed=0.3')
             res_foreward = request.urlopen(req_foreward)
             
             #print('向前走60cm！')
@@ -106,7 +106,7 @@ while(True):
             #print(res_cd.read().decode(encoding='utf-8'))
             res_cd.close()
             m = m + 1
-            timenow = datetime.datetime.now().strftime('%Y-%m-%d' '%H:%M:%S')
+            timenow = datetime.datetime.now().strftime('%Y-%m-%d ' ' %H:%M:%S')
             with open('re-charger.txt','a') as result:
                 result.write(str(timenow) + '，断电回充：第' + str(m) + '次\n')
                 
