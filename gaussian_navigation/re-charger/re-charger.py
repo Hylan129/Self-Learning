@@ -1,7 +1,7 @@
 from urllib import request
 import json,time,datetime
 
-print('充电监控.....')
+print('充电监控中.....')
 #获取实时坐标，get请求
 url1 = "http://10.7.5.88:8080/gs-robot/real_time_data/position"
 
