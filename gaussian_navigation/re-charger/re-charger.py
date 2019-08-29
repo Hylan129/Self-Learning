@@ -110,7 +110,7 @@ while(True):
             with open('re-charger.txt','a') as result:
                 result.write(str(timenow) + '，断电回充：第' + str(m) + '次\n')
                 
-            time.sleep(90)
+            time.sleep(120)
             
             req_stop = request.Request('http://10.7.5.88:8080/gs-robot/cmd/stop_current_task')
             res_stop = request.urlopen(req_stop)
