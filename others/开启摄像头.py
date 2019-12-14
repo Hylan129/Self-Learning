@@ -2,6 +2,8 @@
 import cv2
 
 capture = cv2.VideoCapture(0)
+capture.set(3,1366)
+capture.set(4,768)
 
 i = 0
 
