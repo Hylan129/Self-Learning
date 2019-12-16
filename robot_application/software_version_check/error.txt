@@ -1,5 +1,0 @@
-(20009, b'DB-Lib error message 20009, severity 9:\nUnable to connect: Adaptive Server is unavailable or does not exist (10.7.5.105:1433)\nNet-Lib error during Unknown error (10060)\n')
-(20009, b'DB-Lib error message 20009, severity 9:\nUnable to connect: Adaptive Server is unavailable or does not exist (10.7.5.105:1433)\nNet-Lib error during Unknown error (10060)\n')
-(20009, b'DB-Lib error message 20009, severity 9:\nUnable to connect: Adaptive Server is unavailable or does not exist (10.7.5.105:1433)\nNet-Lib error during Unknown error (10060)\n')
-(20009, b'DB-Lib error message 20009, severity 9:\nUnable to connect: Adaptive Server is unavailable or does not exist (10.7.5.105:1433)\nNet-Lib error during Unknown error (10060)\n')
-(20009, b'DB-Lib error message 20009, severity 9:\nUnable to connect: Adaptive Server is unavailable or does not exist (10.7.5.105:1433)\nNet-Lib error during Unknown error (10060)\n')

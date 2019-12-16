@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import smtplib
+import smtplib,json
 from email.mime.text import MIMEText
 from email.header import Header
 from email.mime.multipart import MIMEMultipart
@@ -24,7 +24,7 @@ def sendEmail(html_page,ComputerName,attach1,attach2):
         
         message = MIMEMultipart()
         sender = 'jyzyg129@163.com'
-        receivers = [mail.strip() for mail in open('files/mailto.txt').readlines()] # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+        receivers = json.loads(open("files/info_setting.txt").read())['mails'] # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
         
         message['From'] = "Hylan129<jyzyg129@163.com>"
         message['To'] = ','.join(receivers)
@@ -44,15 +44,25 @@ def sendEmail(html_page,ComputerName,attach1,attach2):
         #添加附件照片1：
         message.attach(uploadPicture(attach1,'logo'))
         message.attach(uploadPicture(attach2,'foreward'))
-        message.attach(uploadPicture(attach2,'拍照效果'))
+        message.attach(uploadPicture(attach2,'camera'))
 
-        # 构造附件1，传送当前目录下的 test.csv 文件
-        att3 = MIMEText(open('files/dll_version_information.csv', 'rb').read(), 'base64', 'utf-8')
-        att3["Content-Type"] = 'application/octet-stream'
-        # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
-        att3["Content-Disposition"] = 'attachment; filename="dll_version_information.csv"'
+        try:
+            # 构造附件1，传送当前目录下的 test.csv 文件
+            att3 = MIMEText(open('files/dll_version_information.csv', 'rb').read(), 'base64', 'utf-8')
+            att3["Content-Type"] = 'application/octet-stream'
+            # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
+            att3["Content-Disposition"] = 'attachment; filename="dll_version_information.csv"'
 
-        message.attach(att3)
+            att4 = MIMEText(open('files/softwares_version.txt', 'rb').read(), 'base64', 'utf-8')
+            att4["Content-Type"] = 'application/octet-stream'
+            # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
+            att4["Content-Disposition"] = 'attachment; filename="softwares_version.txt"'
+
+            message.attach(att3)
+            message.attach(att4)
+        except Exception as e:
+            with open('error.txt','a') as code:
+                code.write(str(e)+ "附件添加故障，请检查是否生成文件！\n")
 
         smtpObj = smtplib.SMTP() 
         smtpObj.connect(mail_host, 25)    # 25 为 SMTP 端口号

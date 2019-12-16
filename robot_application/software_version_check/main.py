@@ -3,10 +3,10 @@
 #根据以上生成完整的文件路径清单
 #查询全部文件的版本信息等
 #存储到csv文件中。
-import sql_match,take_picture,web_produce
+import sql_match,take_picture,web_produce,sixmic
 import file_version,FileMailTo
 import os,csv,information_record
-import socket,time,gaussian
+import socket,time,gaussian,json
 
 def getDllResult(defalut_path,dll_names):
     dll_paths = [defalut_path + dll_name for dll_name in dll_names]
@@ -80,8 +80,12 @@ if __name__ == "__main__":
 
         gaussian_setting_information = gaussian.getGaussianVersion("http://10.7.5.88:8080/gs-robot/info")
 
+        #增加六麦AIUI软件版本
+        sixmic_ip = json.loads(open("files/info_setting.txt").read())['sixmic_ip']
+        sixmic_info =  '<td>'+'</td><td>'.join(sixmic.getSixMic_Information(sixmic_ip)) + '</td>'
+
         final_page = web_produce.makePage("cid:logo",computer_information[0],MachineCode,' || '.join(computer_information[2]),
-            CheckTime,robot_setting_information,gaussian_setting_information)
+            CheckTime,robot_setting_information,gaussian_setting_information,sixmic_info)
 
         #信息写入存储！
         with open('files/version_information_' + computer_information[0] + '.html','w',encoding='utf-8') as code:
