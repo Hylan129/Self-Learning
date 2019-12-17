@@ -53,10 +53,10 @@ def sendEmail(html_page,ComputerName,attach1,attach2):
             # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
             att3["Content-Disposition"] = 'attachment; filename="dll_version_information.csv"'
 
-            att4 = MIMEText(open('files/softwares_version.txt', 'rb').read(), 'base64', 'utf-8')
+            att4 = MIMEText(open('files/android_softwares_version.txt', 'rb').read(), 'base64', 'utf-8')
             att4["Content-Type"] = 'application/octet-stream'
             # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
-            att4["Content-Disposition"] = 'attachment; filename="softwares_version.txt"'
+            att4["Content-Disposition"] = 'attachment; filename="android_softwares_version.txt"'
 
             message.attach(att3)
             message.attach(att4)

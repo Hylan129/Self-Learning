@@ -10,7 +10,7 @@ def ADBComand(cmd):
             cmd_res = res.stdout.read().decode('gbk')
 
         if 'connected' in cmd_res:return True
-        return cmd_res
+        return cmd_res.replace('versionName=','')
     except Exception as e:
         with open('error.txt','a') as code:
             code.write(str(e) + "")
@@ -36,12 +36,12 @@ def getSixMic_Information(ip):
             os_version = ADBComand("adb shell getprop ro.build.version.release")
             softwares_version = [ADBComand("adb shell dumpsys package " + software + " | findstr versionName") for software in softwares]
             # 保存所有的软件信息到文件中。
-            ADBComand(r'adb shell dumpsys package * | findstr "\<pkg\> \<versionName\>  \<timeStamp\>" > files/softwares_version.txt')
-            return [info.strip() for info in [mic_name,mac_address,os_version] + softwares_version]
+            ADBComand(r'adb shell dumpsys package * | findstr "\<pkg\> \<versionName\>  \<timeStamp\>" > files/android_softwares_version.txt')
+            return [info.strip() for info in [ip,mic_name,mac_address,os_version] + softwares_version]
 
         else:
-            return ['六麦连接失败！','','','','','']
+            return [ip,'六麦连接失败！','','','','','']
     except Exception as e:
         with open('error.txt','a') as code:
             code.write(str(e) + "")
-        return ['六麦连接失败！','','','','','']
+        return [ip,'六麦连接失败！','','','','','']

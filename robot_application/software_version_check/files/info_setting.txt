@@ -1,12 +1,19 @@
 {
 	"sixmic_ip":
-		"10.10.12.175",
+		"10.10.12.133",
 	"mails":
 		[	
 		"ZYG<zhaoyg@qxaiot.com>",
 		"TTJ<tanjj@qxaiot.com>",
+		"ZGL<zhanggl@qxaiot.com>",
+		"XPP<xupp@qxaiot.com>"
+		],
+	"mails_backup":
+		[	
+		"ZYG<zhaoyg@qxaiot.com>",
+		"TTJ<tanjj@qxaiot.com>",
 		"WZH<wangzh@qxaiot.com>",
-		"WGY<wanggy@qxiaiot.com>",
+		"WGY<wanggy@qxaiot.com>",
 		"ZGL<zhanggl@qxaiot.com>",
 		"XPP<xupp@qxaiot.com>",
 		"LFY<luofy@qxaiot.com>"

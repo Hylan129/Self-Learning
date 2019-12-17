@@ -7,10 +7,11 @@ def getGaussianVersion(url):
     if version_init['msg'] == 'successed':
 
         need_data = version_init['data']
-        temp = ''
+        temp = '不涉及'
+        del need_data['hardwareVersion5']
         try:
             temp = need_data['laser_serial_number']
-            del need_data['hardwareVersion5'],need_data['diskAvailable'],need_data['diskCapacity'],need_data['laser_serial_number'],need_data["systemVersion"]
+            del need_data['diskAvailable'],need_data['diskCapacity'],need_data['laser_serial_number'],need_data["systemVersion"]
         except:
             pass
         for m in need_data.values():
