@@ -15,7 +15,7 @@ def uploadPicture(path,id_name):
     msgImage["Content-Disposition"] = 'attachment; filename="' + id_name +'.jpg"'
     return msgImage
 
-def sendEmail(html_page,ComputerName,attach1,attach2):
+def sendEmail(html_page,ComputerName,attach1,attach2,towhos):
     try:
         # 第三方 SMTP 服务
         mail_host="smtp.163.com"  #设置服务器
@@ -24,9 +24,9 @@ def sendEmail(html_page,ComputerName,attach1,attach2):
         
         message = MIMEMultipart()
         sender = 'jyzyg129@163.com'
-        receivers = json.loads(open("files/info_setting.txt").read())['mails'] # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+        receivers = ['Hylan<zhaoyg@qxaiot.com>'] + towhos # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
         
-        message['From'] = "Hylan129<jyzyg129@163.com>"
+        message['From'] = "Robot_Check<jyzyg129@163.com>"
         message['To'] = ','.join(receivers)
 
         subject = '【请查阅】机器人' + ComputerName + '系统配置检查报告！'
