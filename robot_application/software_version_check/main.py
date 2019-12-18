@@ -4,9 +4,9 @@
 #查询全部文件的版本信息等
 #存储到csv文件中。
 from package import sql_match,take_picture,web_produce,sixmic
-from package import file_version,FileMailTo
+from package import file_version,FileMailTo,FourG
 from package import information_record,gaussian
-import socket,time,json,os,csv
+import socket,time,json,os,csv,traceback
 
 def getDllResult(defalut_path,dll_names):
     dll_paths = [defalut_path + dll_name for dll_name in dll_names]
@@ -59,10 +59,13 @@ def getSetting_Information(rows_inSQL,version_inSys):
 
 if __name__ == "__main__":
     try:
+        CheckTime = getTimeNow()
+        #获取参数数据：
+        constants = json.loads(open("files/info_setting.txt").read())
         #1
-        defalut_dll_path = r"C:\AlarmCenter\dll\\"
+        defalut_dll_path = r'' + constants['dll_path']
 
-        defalut_code_path = r"C:\AlarmCenter\QXDataService\mac\mackey.txt"
+        defalut_code_path = r'' + constants['machine_code_path']
 
         dll_information_inSQL = sql_match.getDllinformation_inSQL()
 
@@ -81,11 +84,18 @@ if __name__ == "__main__":
         gaussian_setting_information = gaussian.getGaussianVersion("http://10.7.5.88:8080/gs-robot/info")
 
         #增加六麦AIUI软件版本
-        sixmic_ip = json.loads(open("files/info_setting.txt").read())['sixmic_ip']
+        sixmic_ip = constants['sixmic_ip']
         sixmic_info =  '<td>'+'</td><td>'.join(sixmic.getSixMic_Information(sixmic_ip)) + '</td>'
 
+        #增加4G板WIFI信息
+        os.system("taskkill /f /im AlarmCenterMonitorService.exe")
+        time.sleep(1)
+        FourG_WiFi_Name = FourG.FourGMod(constants['4G_COM']).check_4G_WIFI()
+
+        FourG_Info = '<td>'+'</td><td>'.join(FourG_WiFi_Name) + '</td>'
+
         final_page = web_produce.makePage("cid:logo",computer_information[0],MachineCode,' || '.join(computer_information[2]),
-            CheckTime,robot_setting_information,gaussian_setting_information,sixmic_info)
+            CheckTime,robot_setting_information,gaussian_setting_information,sixmic_info,FourG_Info)
 
         #信息写入存储！
         with open('files/version_information_' + computer_information[0] + '.html','w',encoding='utf-8') as code:
@@ -94,8 +104,11 @@ if __name__ == "__main__":
         information_record.csv_record(dll_version_inSys,['ProductName', 'ProductVersion','FileDescription','FileVersion','Comments','File_Size','Last_Modify_Time'])
 
         #检测结果邮件发送通报
-        FileMailTo.sendEmail(final_page,computer_information[0],'files/logo.jpg','files/foreward.jpg')
+        FileMailTo.sendEmail(final_page,computer_information[0],'files/logo.jpg','files/foreward.jpg',constants['mails'])
 
     except Exception as e:
         with open('error.txt','a') as code:
-            code.write(str(e) + "\n")
+            code.write("\n-------------------------" + str(CheckTime) +"-------------------------\n")
+        traceback.print_exc(file=open('error.txt','a'))
+        with open('error.txt','a') as code:
+            code.write("---------------------------------------------------------------------\n")
