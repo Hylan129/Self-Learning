@@ -3,6 +3,10 @@
 		"10.10.12.133",
 	"4G_COM":
 		"COM13",
+	"dll_path":
+		"C:\\AlarmCenter\\dll\\",
+	"machine_code_path":
+		"C:\\AlarmCenter\\QXDataService\\mac\\mackey.txt",
 	"mails":
 		[	
 		"ZYG<zhaoyg@qxaiot.com>",
