@@ -30,7 +30,9 @@ def getSixMic_Information(ip):
     #返回mic_name,mac,os_version,software_version
     #返回所有软件信息，并生成txt，保存在files目录下。sixmic_softwares
     try:
-        if ADBComand("adb connect " + ip):
+        if ip == '':
+            return ['六麦IP未设置','连接失败！','','','','','']
+        elif ADBComand("adb connect " + ip):
             mic_name = ADBComand("adb shell getprop net.hostname")
             mac_address = ADBComand("adb shell cat /sys/class/net/wlan0/address")
             os_version = ADBComand("adb shell getprop ro.build.version.release")
@@ -38,7 +40,6 @@ def getSixMic_Information(ip):
             # 保存所有的软件信息到文件中。
             ADBComand(r'adb shell dumpsys package * | findstr "\<pkg\> \<versionName\>  \<timeStamp\>" > files/android_softwares_version.txt')
             return [info.strip() for info in [ip,mic_name,mac_address,os_version] + softwares_version]
-
         else:
             return [ip,'六麦连接失败！','','','','','']
     except Exception as e:
