@@ -3,10 +3,10 @@
 #根据以上生成完整的文件路径清单
 #查询全部文件的版本信息等
 #存储到csv文件中。
-import sql_match,take_picture,web_produce,sixmic
-import file_version,FileMailTo
-import os,csv,information_record
-import socket,time,gaussian,json
+from package import sql_match,take_picture,web_produce,sixmic
+from package import file_version,FileMailTo
+from package import information_record,gaussian
+import socket,time,json,os,csv
 
 def getDllResult(defalut_path,dll_names):
     dll_paths = [defalut_path + dll_name for dll_name in dll_names]

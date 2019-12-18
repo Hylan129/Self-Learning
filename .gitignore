@@ -40,3 +40,14 @@ robot_application/software_version_check/build/main/PYZ-00.toc
 robot_application/software_version_check/build/main/warn-main.txt
 robot_application/software_version_check/build/main/xref-main.html
 robot_application/software_version_check/error.txt
+robot_application/software_version_check/build/FourG/xref-FourG.html
+robot_application/software_version_check/build/FourG/warn-FourG.txt
+robot_application/software_version_check/build/FourG/PYZ-00.toc
+robot_application/software_version_check/build/FourG/PYZ-00.pyz
+robot_application/software_version_check/build/FourG/PKG-00.toc
+robot_application/software_version_check/build/FourG/PKG-00.pkg
+robot_application/software_version_check/build/FourG/FourG.exe.manifest
+robot_application/software_version_check/build/FourG/EXE-00.toc
+robot_application/software_version_check/build/FourG/base_library.zip
+robot_application/software_version_check/build/FourG/Analysis-00.toc
+robot_application/software_version_check/package/__pycache__/FourG.cpython-37.pyc
