@@ -1,11 +1,14 @@
-﻿<html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <meta name="viewport" content="width=device-width">
 <title>文本转语音指令+控制播放</title>
 <style>
-	input {width:100%;}
+	input {width:100%;height:40px;font-size:small;border: 1px solid grey;}
+    textarea {border:1px solid grey;}
 	div > a {vertical-align:middle;}
+    #tts_btn1,#tts_btn2{height: 60px;width: 50%;font-size: large;font-weight: bold;font-family:Arial, Helvetica, sans-serif;}
+    #myvideo {height: 60px;width: 100%;}
 </style>
 <script>
 function display(){
@@ -49,25 +52,23 @@ window.location.reload();
 <body>
 <div>
 <label for="ttsText" >1、语音指令</label>
-<textarea  id="ttsText" style="height:100px;width:100%;" type="hidden" placeholder="请输入需要播放的指令...">哈喽，早！</textarea>
+<textarea  id="ttsText" style="height:50px;width:100%;" type="hidden" placeholder="请输入需要播放的指令...">哈喽，早！</textarea>
 <label for="count" >2、播报次数</label>
-<input  id="count" placeholder="请设置指令重复播放次数..." style="height:100px;">
+<input  id="count" placeholder="请设置指令重复播放次数...">
 <label for="delaytime">3、延时时间</label>
-<input  id="delaytime" placeholder="请设置指令播报延时时间,请输入秒数..." style="height:100px;">
+<input  id="delaytime" placeholder="请设置指令播报延时时间,请输入秒数...">
 <label for="voicespd">4、播报语速</label>
-<input  id="voicespd" placeholder="语速，取值0-15，默认为5中语速" style="height:100px;">
+<input  id="voicespd" placeholder="语速，取值0-15，默认为5中语速" >
 <label for="volume">5、音量大小</label>
-<input  id="volume" placeholder="音量，取值0-15，默认为5中音量" style="height:100px;">
+<input  id="volume" placeholder="音量，取值0-15，默认为5中音量">
 <label for="person" >6、发声人</label>
-<input  id="person" placeholder="发音人选择, 0为普通女声，1为普通男生，3为情感合成-度逍遥，4为情感合成-度丫丫,默认为普通女声" style="height:100px;">
+<input  id="person" placeholder="发音人选择, 0为普通女声，1为普通男生，3为情感合成-度逍遥，4为情感合成-度丫丫,默认为普通女声">
 <label for="voicepit" >7、音调高低</label>
-<input  id="voicepit" placeholder="音调，取值0-15，默认为5中语调" style="height:100px;">
-<input type="button" id="tts_btn1" onclick="display()" value="开始播报" style="height:120px;">
-<input type="button" id="tts_btn2" onclick="myrefresh()" value="刷新页面" style="height:120px;">
+<input  id="voicepit" placeholder="音调，取值0-15，默认为5中语调">
+<br><br>
+<input type="button" id="tts_btn1" onclick="display()" value="开始播报"><input type="button" id="tts_btn2" onclick="myrefresh()" value="刷新页面">
 </div>
-<div id="Hylan">
-<video id="myvideo" "></video>
-</div>
+<div id="Hylan"><video id="myvideo"></video></div>
 <div>
 <p id ="counttimes"><font size="3" color="red">请设置参数，并点击开始进行第1次播放！</font></p>
 <p id ="alltimes">总共设置播放次数：</p>
